@@ -1,3 +1,4 @@
+from random import uniform, random
 from yargy import Parser, rule, or_
 from yargy.predicates import eq, type as type_, in_, dictionary
 from yargy.predicates.bank import gram
@@ -6,6 +7,9 @@ from loader import  dbAlerts, token_send, token_inc, chat_id_send, chat_id_inc, 
 import requests, time
 
 import re
+
+EDIT_BY_MIN = 0.01 / 100
+EDIT_BY_MAX = 0.02 / 100
 
 LATIN = type_('LATIN')
 PUNCT = type_('PUNCT')
@@ -76,6 +80,14 @@ pars_3 = Parser(RUL_TYPE_OF)
 pars_4 = Parser(RUL_GOAL)
 pars_5 = Parser(RUL_LENGHT)
 pars_6 = Parser(RUL_FIX)
+
+def edit_number(number) -> float:
+    is_negative = random() < 0.5
+    edit_by = uniform(number*EDIT_BY_MIN, number*EDIT_BY_MAX)
+    if is_negative:
+        edit_by = -(edit_by)
+    number += edit_by
+    return number
 
 # def return_pars_0():
 #     pars_0 = 'test'
